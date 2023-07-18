@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "quarto_tutorial",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\nIn this project we aim to visualize the trends of the most frequently used baby names from 1880 to 2017 in the United States. We do this by:\n\nUnderstanding the different columns of the data set\nFind the top 10 most frequently used baby names in the data for:\n\ngirls\nboys\n\nPlot the yearly trend of the top 10 baby names\n\n\n\n\nCute baby girl\n\n\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "analysis.html",
+    "href": "analysis.html",
+    "title": "analysis",
+    "section": "",
+    "text": "Load packages\n\nlibrary(babynames)\nlibrary(knitr)\nlibrary(dplyr)\nlibrary(ggplot2)\n\nVisualize first 10 names\n\nhead(babynames, n=10) |&gt; kable()\n\n\n\n\nyear\nsex\nname\nn\nprop\n\n\n\n\n1880\nF\nMary\n7065\n0.0723836\n\n\n1880\nF\nAnna\n2604\n0.0266790\n\n\n1880\nF\nEmma\n2003\n0.0205215\n\n\n1880\nF\nElizabeth\n1939\n0.0198658\n\n\n1880\nF\nMinnie\n1746\n0.0178884\n\n\n1880\nF\nMargaret\n1578\n0.0161672\n\n\n1880\nF\nIda\n1472\n0.0150812\n\n\n1880\nF\nAlice\n1414\n0.0144870\n\n\n1880\nF\nBertha\n1320\n0.0135239\n\n\n1880\nF\nSarah\n1288\n0.0131961\n\n\n\n\n\nFunctions\n\n# function to get the most frequent baby names over a time period\nget_most_frequent &lt;- function(babynames, select_sex, from = 1950) {\n  most_freq &lt;- babynames |&gt;\n    filter(sex == select_sex, year &gt; from) |&gt;\n    group_by(name) |&gt;\n    summarise(average = mean(prop)) |&gt;\n    arrange(desc(average))\n  return(most_freq)\n}\n\n# plot the top most popular names\nplot_top &lt;- function(x, babynames, select_sex, top = 10, from = 1950) {\n  topx &lt;- x$name[1:top]\n  \n  p &lt;- babynames |&gt;\n    filter(name %in% topx, sex == select_sex, year &gt; from) |&gt;\n    ggplot(aes(x = year, y = prop, color = name)) +\n    geom_line() +\n    scale_color_brewer(palette = \"Paired\") +\n    theme_classic()\n  \n  return(p)\n}\n\nPlot top girl names:\n\nget_most_frequent(babynames, select_sex = \"F\") |&gt;\n  plot_top(babynames, select_sex = \"F\", top = 10)\n\n\n\n\nFigure 1: Line plot displaying proportion of top 10 girl names by year\n\n\n\n\nIn Figure 1 you can see that there has been a peak in popularity for ‘Lisa’, ‘Jennifer’ and ‘Jessica’.\nPlot top boys names:\n\nget_most_frequent(babynames, select_sex = \"M\") |&gt;\n  plot_top(babynames, select_sex = \"M\", top = 10)\n\n\n\n\nFigure 2: Line plot displaying proportion of top 10 boy names by year\n\n\n\n\nFigure 2 shows that names that were popular before 1990 are relatively infrequent after 2000."
+  }
+]
