@@ -16,6 +16,9 @@ In this project we aim to visualize the trends of the most frequently used baby 
 
 ![Cute baby girl](https://live.staticflickr.com/231/517148389_092fcaaf2b_w.jpg){width="400" fig-align="right"}
 
-```{r}
-1 + 1
-```
+
+
+
+[![DOI](https://zenodo.org/badge/667894957.svg)](https://zenodo.org/badge/latestdoi/667894957)
+
+
